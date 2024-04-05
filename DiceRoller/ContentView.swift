@@ -6,16 +6,22 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct ContentView: View {
+    @State private var setting = DiceSetting()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            DiceView(numberOfDices: $setting.numberOfDices, numberOfSides: $setting.numberOfSlices)
+                .tabItem { Label("Roll Dice", systemImage: "dice.fill") }
+            
+            HistoryView()
+                .tabItem { Label("History", systemImage: "list.bullet") }
+            
+            SettingView(numberOfDices: $setting.numberOfDices, numberOfSlices: $setting.numberOfSlices)
+                .tabItem { Label("Setting", systemImage: "gear") }
         }
-        .padding()
     }
 }
 
