@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SceneKit
 
 struct ContentView: View {
     @State private var setting = DiceSetting()
@@ -22,7 +21,12 @@ struct ContentView: View {
             
             SettingView(numberOfDices: $setting.numberOfDices, numberOfSlices: $setting.numberOfSlices)
                 .tabItem { Label("Setting", systemImage: "gear") }
-        }
+        }.onAppear(perform: loadData)
+    }
+    
+    func loadData() {
+        records = DiceStorage.loadData()
+        setting = DiceSettingStorage.loadData()
     }
 }
 

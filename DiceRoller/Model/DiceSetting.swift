@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class DiceSetting {
+class DiceSetting: Codable {
     var numberOfDices = 5
     var numberOfSlices = 6
 }

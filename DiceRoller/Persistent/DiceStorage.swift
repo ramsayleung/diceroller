@@ -8,7 +8,7 @@
 import Foundation
 
 class DiceStorage {
-    static let savePath = URL.documentsDirectory.appending(path: "savedDices")
+    static let savePath = URL.documentsDirectory.appending(path: "savedDiceRecords")
     static func loadData() -> [DiceRecord] {
         do {
             let data = try Data(contentsOf: savePath)

@@ -33,6 +33,8 @@ struct SettingView: View {
                 }
             }
         }
+        .onChange(of: numberOfDices, saveData)
+        .onChange(of: numberOfSlices, saveData)
     }
     
     var numberOfDicesProxy: Binding<Double> {
@@ -44,6 +46,13 @@ struct SettingView: View {
                 numberOfDices = Int($0)
             }
         )
+    }
+    
+    func saveData() {
+        let setting = DiceSetting()
+        setting.numberOfDices = numberOfDices
+        setting.numberOfSlices = numberOfSlices
+        DiceSettingStorage.saveData(setting: setting)
     }
 }
 
