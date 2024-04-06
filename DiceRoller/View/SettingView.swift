@@ -18,7 +18,7 @@ struct SettingView: View {
                         .font(.headline)
                         .padding()
                     
-                    CustomSliderView(sliderValue: numberOfDicesProxy, inRange: 1...5, step: 1)
+                    CustomSliderView(sliderValue: numberOfDicesProxy, inRange: 1...8, step: 1)
                 }
                 
                 Section("Number of Slices") {

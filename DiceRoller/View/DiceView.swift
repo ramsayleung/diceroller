@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+
+// MARK: - DiceItemView
 struct DiceItemView: View {
     let value: Int
     let foregroundColor: Color
@@ -24,10 +26,58 @@ struct DiceItemView: View {
     }
 }
 
+// MARK: - RolledDiceValueView
+struct RolledDiceValueView: View {
+    let totalRolledValue: Int
+    let allDicesCapacity: Int
+    var body: some View {
+        VStack {
+            Text("Total")
+                .font(.custom("Thonburi", size: 30))
+                .bold()
+                .foregroundStyle(.white)
+                .padding(.vertical, 5)
+            
+            HStack {
+                Text(" \(totalRolledValue) ")
+                    .font(.custom("Optima", size: 35))
+                    .bold()
+                    .foregroundStyle(.green)
+                Text("/ \(allDicesCapacity)")
+                    .font(.custom("Optima", size: 20))
+                    .foregroundStyle(.white)
+            }
+        }
+    }
+}
+
+struct DiceTitleView: View {
+    let numberOfSides: Int
+    var body: some View {
+        HStack(alignment: .center) {
+            Text("\(numberOfSides)-sides")
+                .font(.custom("Optima", size: 25))
+                .bold()
+            
+            Image(systemName: "die.face.5")
+                .resizable()
+                .frame(width: 18, height: 18)
+                .rotationEffect(.degrees(-30))
+        }
+        .padding()
+        .foregroundColor(.white)
+        .background(.black.opacity(0.4))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .shadow(radius: 10)
+    }
+}
+
+// MARK: - DiceView
 struct DiceView: View {
     @State private var viewModel: DiceViewModel
     @Binding var numberOfDices : Int
     @Binding var numberOfSides : Int
+    @Binding var records: [DiceRecord]
     
     let colors: [Color] = [.blue, .red, .green, .yellow, .orange]
     var body: some View {
@@ -35,6 +85,8 @@ struct DiceView: View {
             Image(decorative: "background")
                 .resizable()
             VStack(alignment: .center) {
+                DiceTitleView(numberOfSides: numberOfSides)
+                
                 HStack {
                     Spacer() // Create space at the top for the falling effect
                     LazyVGrid(columns: Array(repeating: GridItem(), count: 4), alignment: .center, spacing: 20){
@@ -46,29 +98,16 @@ struct DiceView: View {
                         }
                     }.padding(20)
                         .onReceive(viewModel.timer) { time in
-                            viewModel.rollingDice()
+                            viewModel.rollingDice() {
+                                let diceRecord = DiceRecord(rolledAt: viewModel.rollAt, numberOfDices: numberOfDices, numberOfSlides: numberOfSides, diceValues: viewModel.diceValues, allDicesCapacity: allDicesCapacity(), totalRolledValue: viewModel.totalRolledValue())
+                                records.append(diceRecord)
+                            }
                         }
                 }.opacity(viewModel.areDicesFalling ? 1 : 0)
                 Spacer() // Create space at the bottom for the bounce effect
-                VStack {
-                    Text("Total")
-                        .font(.custom("Thonburi", size: 35))
-                        .bold()
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                    
-                    HStack {
-                        Text(" \(viewModel.totalRoll()) ")
-                            .font(.custom("Optima", size: 40))
-                            .bold()
-                            .foregroundStyle(.green)
-                        
-                        Text("/ \(allDicesCapacity())")
-                            .font(.custom("Optima", size: 25))
-                            .foregroundStyle(.white)
-                    }
-                }.opacity(viewModel.isAnimiationRunning() || !viewModel.areDicesFalling ? 0 : 1)
+                
+                RolledDiceValueView(totalRolledValue: viewModel.totalRolledValue(), allDicesCapacity: allDicesCapacity())
+                    .opacity(viewModel.isAnimiationRunning() || !viewModel.areDicesFalling ? 0 : 1)
                 
                 Button {
                     viewModel.roll()
@@ -91,6 +130,7 @@ struct DiceView: View {
                 }
                 .padding()
             }
+            .padding(.top, 5)
         }
         .onChange(of: numberOfDices, reset)
         .onChange(of: numberOfSides, reset)
@@ -103,14 +143,15 @@ struct DiceView: View {
     
     func reset() {
         viewModel.areDicesFalling = false
-        viewModel.fallingOffsetY = 300
+        viewModel.fallingOffsetY = 250.0
         viewModel.rollingDices = DiceViewModel.populateDice(numberOfDices: numberOfDices, numberOfSides: numberOfSides)
         viewModel.diceValues = Array(repeating: 0, count: numberOfDices)
     }
     
-    init(numberOfDices: Binding<Int>, numberOfSides: Binding<Int>) {
+    init(numberOfDices: Binding<Int>, numberOfSides: Binding<Int>, diceRecords: Binding<Array<DiceRecord>>) {
         self._numberOfDices = numberOfDices
         self._numberOfSides = numberOfSides
+        self._records = diceRecords
         self.viewModel = DiceViewModel()
         self.viewModel.rollingDices = DiceViewModel.populateDice(numberOfDices: numberOfDices.wrappedValue, numberOfSides: numberOfSides.wrappedValue)
         self.viewModel.diceValues = Array(repeating: 0, count: numberOfDices.wrappedValue)
@@ -120,5 +161,6 @@ struct DiceView: View {
 #Preview {
     @State var numberOfDices = 4
     @State var numberOfSides = 6
-    return DiceView(numberOfDices: $numberOfDices, numberOfSides: $numberOfSides)
+    @State var records = [DiceRecord]()
+    return DiceView(numberOfDices: $numberOfDices, numberOfSides: $numberOfSides, diceRecords: $records)
 }
