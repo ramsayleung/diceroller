@@ -13,13 +13,14 @@ extension DiceView {
         var areDicesFalling = false
         var rollingDices = [Int]()
         var diceValues = [Int]()
-        var timeElapsed = 0
-        var fallingOffsetY = 300.0
+        var rollAt = Date.now
+        var fallingOffsetY = 250.0
+        var elapsedTime = 0
         
         let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
         let animationDuration = 3.0
         
-        func rollingDice() {
+        func rollingDice(onFinish: () -> Void) {
             guard areDicesFalling else { return }
             guard isAnimiationRunning() else { return }
             
@@ -28,19 +29,23 @@ extension DiceView {
                 diceValues[i] = rollingDices.randomElement() ?? 1
             }
             
-            timeElapsed += 1
+            elapsedTime += 1
+            if !isAnimiationRunning() {
+                onFinish()
+            }
         }
         
         func isAnimiationRunning() -> Bool {
-            Double(timeElapsed) < animationDuration
+            return Double(elapsedTime) < animationDuration
         }
         
         func roll() {
             areDicesFalling.toggle()
-            timeElapsed = 0
+            rollAt = Date.now
+            elapsedTime = 0
         }
         
-        func totalRoll() -> Int {
+        func totalRolledValue() -> Int {
             diceValues.reduce(0, +)
         }
         

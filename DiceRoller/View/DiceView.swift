@@ -96,13 +96,14 @@ struct DiceView: View {
                                 .offset(y: viewModel.areDicesFalling ? viewModel.fallingOffsetY : 0)
                                 .animation(Animation.bouncy(duration: viewModel.animationDuration), value: viewModel.areDicesFalling)
                         }
-                    }.padding(20)
-                        .onReceive(viewModel.timer) { time in
-                            viewModel.rollingDice() {
-                                let diceRecord = DiceRecord(rolledAt: viewModel.rollAt, numberOfDices: numberOfDices, numberOfSlides: numberOfSides, diceValues: viewModel.diceValues, allDicesCapacity: allDicesCapacity(), totalRolledValue: viewModel.totalRolledValue())
-                                records.append(diceRecord)
-                            }
+                    }
+                    .padding(20)
+                    .onReceive(viewModel.timer) { time in
+                        viewModel.rollingDice() {
+                            let diceRecord = DiceRecord(rolledAt: viewModel.rollAt, numberOfDices: numberOfDices, numberOfSlides: numberOfSides, diceValues: viewModel.diceValues, allDicesCapacity: allDicesCapacity(), totalRolledValue: viewModel.totalRolledValue())
+                            records.append(diceRecord)
                         }
+                    }
                 }.opacity(viewModel.areDicesFalling ? 1 : 0)
                 Spacer() // Create space at the bottom for the bounce effect
                 
@@ -134,6 +135,7 @@ struct DiceView: View {
         }
         .onChange(of: numberOfDices, reset)
         .onChange(of: numberOfSides, reset)
+        .onChange(of: records, saveData)
     }
     
     
@@ -146,6 +148,10 @@ struct DiceView: View {
         viewModel.fallingOffsetY = 250.0
         viewModel.rollingDices = DiceViewModel.populateDice(numberOfDices: numberOfDices, numberOfSides: numberOfSides)
         viewModel.diceValues = Array(repeating: 0, count: numberOfDices)
+    }
+    
+    func saveData() {
+        DiceStorage.saveData(dices: records)
     }
     
     init(numberOfDices: Binding<Int>, numberOfSides: Binding<Int>, diceRecords: Binding<Array<DiceRecord>>) {

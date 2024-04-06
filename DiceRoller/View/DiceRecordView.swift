@@ -26,7 +26,7 @@ struct DiceRecordView: View {
                     }.padding(20)
                 }
                 
-                Spacer() // Create space at the top for the falling effect
+                Spacer()
                 
                 RolledDiceValueView(totalRolledValue: dice.totalRolledValue, allDicesCapacity: dice.allDicesCapacity)
             }

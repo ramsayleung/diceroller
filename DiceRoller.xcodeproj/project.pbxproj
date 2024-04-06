@@ -17,9 +17,13 @@
 		57CC12BA2BC0735100441A7F /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12B92BC0735100441A7F /* DiceView.swift */; };
 		57CC12BC2BC0744F00441A7F /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12BB2BC0744F00441A7F /* HistoryView.swift */; };
 		57CC12BE2BC0745800441A7F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12BD2BC0745800441A7F /* SettingView.swift */; };
-		57CC12C02BC0860B00441A7F /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12BF2BC0860B00441A7F /* Dice.swift */; };
+		57CC12C02BC0860B00441A7F /* DiceSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12BF2BC0860B00441A7F /* DiceSetting.swift */; };
 		57CC12C32BC08A0F00441A7F /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12C22BC08A0F00441A7F /* CustomSliderView.swift */; };
 		57CC12C82BC0B81500441A7F /* DiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12C72BC0B81500441A7F /* DiceViewModel.swift */; };
+		57CC12CA2BC0CA9200441A7F /* DiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12C92BC0CA9200441A7F /* DiceRecord.swift */; };
+		57CC12CC2BC0CF4700441A7F /* DiceRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12CB2BC0CF4700441A7F /* DiceRecordView.swift */; };
+		57CC12CF2BC0FBBF00441A7F /* DiceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12CE2BC0FBBF00441A7F /* DiceStorage.swift */; };
+		57CC12D32BC0FCAA00441A7F /* DiceSettingStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC12D22BC0FCAA00441A7F /* DiceSettingStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +58,13 @@
 		57CC12B92BC0735100441A7F /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
 		57CC12BB2BC0744F00441A7F /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		57CC12BD2BC0745800441A7F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		57CC12BF2BC0860B00441A7F /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
+		57CC12BF2BC0860B00441A7F /* DiceSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceSetting.swift; sourceTree = "<group>"; };
 		57CC12C22BC08A0F00441A7F /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
 		57CC12C72BC0B81500441A7F /* DiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceViewModel.swift; sourceTree = "<group>"; };
+		57CC12C92BC0CA9200441A7F /* DiceRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceRecord.swift; sourceTree = "<group>"; };
+		57CC12CB2BC0CF4700441A7F /* DiceRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceRecordView.swift; sourceTree = "<group>"; };
+		57CC12CE2BC0FBBF00441A7F /* DiceStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceStorage.swift; sourceTree = "<group>"; };
+		57CC12D22BC0FCAA00441A7F /* DiceSettingStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceSettingStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,17 +115,14 @@
 		57CC128D2BBFBE7500441A7F /* DiceRoller */ = {
 			isa = PBXGroup;
 			children = (
+				57CC12D02BC0FC8100441A7F /* Persistent */,
+				57CC12CD2BC0FBA100441A7F /* View */,
 				57CC12C62BC0B80600441A7F /* ViewModel */,
 				57CC12C12BC0861400441A7F /* Model */,
 				57CC128E2BBFBE7500441A7F /* DiceRollerApp.swift */,
-				57CC12902BBFBE7500441A7F /* ContentView.swift */,
-				57CC12BB2BC0744F00441A7F /* HistoryView.swift */,
-				57CC12BD2BC0745800441A7F /* SettingView.swift */,
-				57CC12C22BC08A0F00441A7F /* CustomSliderView.swift */,
 				57CC12922BBFBE7600441A7F /* Assets.xcassets */,
 				57CC12942BBFBE7600441A7F /* DiceRoller.entitlements */,
 				57CC12952BBFBE7600441A7F /* Preview Content */,
-				57CC12B92BC0735100441A7F /* DiceView.swift */,
 			);
 			path = DiceRoller;
 			sourceTree = "<group>";
@@ -150,7 +155,8 @@
 		57CC12C12BC0861400441A7F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				57CC12BF2BC0860B00441A7F /* Dice.swift */,
+				57CC12BF2BC0860B00441A7F /* DiceSetting.swift */,
+				57CC12C92BC0CA9200441A7F /* DiceRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -161,6 +167,28 @@
 				57CC12C72BC0B81500441A7F /* DiceViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		57CC12CD2BC0FBA100441A7F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				57CC12902BBFBE7500441A7F /* ContentView.swift */,
+				57CC12C22BC08A0F00441A7F /* CustomSliderView.swift */,
+				57CC12CB2BC0CF4700441A7F /* DiceRecordView.swift */,
+				57CC12B92BC0735100441A7F /* DiceView.swift */,
+				57CC12BB2BC0744F00441A7F /* HistoryView.swift */,
+				57CC12BD2BC0745800441A7F /* SettingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		57CC12D02BC0FC8100441A7F /* Persistent */ = {
+			isa = PBXGroup;
+			children = (
+				57CC12D22BC0FCAA00441A7F /* DiceSettingStorage.swift */,
+				57CC12CE2BC0FBBF00441A7F /* DiceStorage.swift */,
+			);
+			path = Persistent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,12 +321,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57CC12CC2BC0CF4700441A7F /* DiceRecordView.swift in Sources */,
+				57CC12CA2BC0CA9200441A7F /* DiceRecord.swift in Sources */,
 				57CC12912BBFBE7500441A7F /* ContentView.swift in Sources */,
 				57CC12C32BC08A0F00441A7F /* CustomSliderView.swift in Sources */,
 				57CC12BE2BC0745800441A7F /* SettingView.swift in Sources */,
 				57CC12BC2BC0744F00441A7F /* HistoryView.swift in Sources */,
+				57CC12D32BC0FCAA00441A7F /* DiceSettingStorage.swift in Sources */,
+				57CC12CF2BC0FBBF00441A7F /* DiceStorage.swift in Sources */,
 				57CC12BA2BC0735100441A7F /* DiceView.swift in Sources */,
-				57CC12C02BC0860B00441A7F /* Dice.swift in Sources */,
+				57CC12C02BC0860B00441A7F /* DiceSetting.swift in Sources */,
 				57CC128F2BBFBE7500441A7F /* DiceRollerApp.swift in Sources */,
 				57CC12C82BC0B81500441A7F /* DiceViewModel.swift in Sources */,
 			);
