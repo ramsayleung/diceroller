@@ -135,7 +135,6 @@ struct DiceView: View {
         }
         .onChange(of: numberOfDices, reset)
         .onChange(of: numberOfSides, reset)
-        .onChange(of: records, saveData)
     }
     
     
@@ -148,10 +147,6 @@ struct DiceView: View {
         viewModel.fallingOffsetY = 250.0
         viewModel.rollingDices = DiceViewModel.populateDice(numberOfDices: numberOfDices, numberOfSides: numberOfSides)
         viewModel.diceValues = Array(repeating: 0, count: numberOfDices)
-    }
-    
-    func saveData() {
-        DiceStorage.saveData(dices: records)
     }
     
     init(numberOfDices: Binding<Int>, numberOfSides: Binding<Int>, diceRecords: Binding<Array<DiceRecord>>) {

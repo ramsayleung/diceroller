@@ -8,7 +8,11 @@
 import Foundation
 
 @Observable
-class DiceSetting: Codable {
+class DiceSetting: Codable, Equatable{
+    static func == (lhs: DiceSetting, rhs: DiceSetting) -> Bool {
+        lhs.numberOfDices == rhs.numberOfDices && rhs.numberOfSlices == lhs.numberOfSlices
+    }
+    
     var numberOfDices = 5
     var numberOfSlices = 6
 }

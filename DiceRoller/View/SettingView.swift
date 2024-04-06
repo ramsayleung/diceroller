@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct SettingView: View {
-    @Binding var numberOfDices: Int
-    @Binding var numberOfSlices: Int
+    @Binding var setting: DiceSetting
     var body: some View {
         NavigationStack {
             Form {
                 Section("Number of Dice") {
-                    Text("Dices: \(numberOfDices.formatted(.number))")
+                    Text("Dices: \(setting.numberOfDices.formatted(.number))")
                         .font(.headline)
                         .padding()
                     
@@ -22,10 +21,10 @@ struct SettingView: View {
                 }
                 
                 Section("Number of Slices") {
-                    Text("Slices: \(numberOfSlices)")
+                    Text("Slices: \(setting.numberOfSlices)")
                         .font(.headline)
                         .padding()
-                    Picker("Please choose a color", selection: $numberOfSlices) {
+                    Picker("Please choose a color", selection: $setting.numberOfSlices) {
                         ForEach([4,6,10,15,20,100], id: \.self) {
                             Text("\($0)")
                         }
@@ -33,31 +32,22 @@ struct SettingView: View {
                 }
             }
         }
-        .onChange(of: numberOfDices, saveData)
-        .onChange(of: numberOfSlices, saveData)
     }
     
     var numberOfDicesProxy: Binding<Double> {
         Binding<Double>(
             get: {
-                return Double(numberOfDices)
+                return Double(setting.numberOfDices)
             },
             set: {
-                numberOfDices = Int($0)
+                setting.numberOfDices = Int($0)
             }
         )
     }
     
-    func saveData() {
-        let setting = DiceSetting()
-        setting.numberOfDices = numberOfDices
-        setting.numberOfSlices = numberOfSlices
-        DiceSettingStorage.saveData(setting: setting)
-    }
 }
 
 #Preview {
-    @State  var numberOfSlices = 6
-    @State  var numberOfDices = 5
-    return SettingView(numberOfDices: $numberOfDices, numberOfSlices: $numberOfSlices)
+    @State  var setting = DiceSetting()
+    return SettingView(setting: $setting)
 }
